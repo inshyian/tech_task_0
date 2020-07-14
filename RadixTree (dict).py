@@ -136,7 +136,8 @@ class RadixTree():
             else:
                 raise CodeNotExist()
         return codes_found
-    
+
+# Testing    
 rt_new = RadixTree('12', '13', '123', '12345', '123465', '145678')
 rt_new.insert_codes("word1", 'word2', 'word22')
 rt_new.insert_codes('test', 't', 'testing', 'testers', '123465', '145678')
