@@ -63,6 +63,8 @@ class DictPrefixTree():
                 raise CodeNotExist
         return results
     
+    
+# Testing
 trie = DictPrefixTree('12', '13', '123', '12345', '123465', '145678')
 trie.insert_codes("word1", 'word2', 'word22')
 trie.insert_codes('test', 't', 'testing', 'testers', '123465', '145678')
