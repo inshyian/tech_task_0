@@ -70,7 +70,8 @@ class GraphPrefixTrie():
             else:
                 raise CodeNotExist
         return results
-    
+
+# Testing    
 trie_ = GraphPrefixTrie('12', '13', '123', '12345', '123465', '145678')
 trie_.insert_codes("word1", 'word2', 'word22')
 trie_.insert_codes('test', 't', 'testing', 'testers', '123465', '145678')
