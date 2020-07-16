@@ -150,8 +150,8 @@ def test_symmetric_difference_update():
     b = RadixTreeSet.RadixTree('12', '13', '18', '20')
     c = {'12', '13', '14', '15'}
     d = {'12', '13', '18', '20'}
-    a.symmetric_difference(b)
-    c.symmetric_difference(d)
+    a.symmetric_difference_update(b)
+    c.symmetric_difference_update(d)
     assert sorted(a) == sorted(c)
     
 def test_update():
