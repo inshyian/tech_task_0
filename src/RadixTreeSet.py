@@ -18,6 +18,7 @@ class CodeNotExist(Exception):
 class RadixTree():
     def __init__(self, *codes) -> None:
         self.root = dict()
+        self.len = 0
         if len(codes) > 0:
             for code in codes:
                 self.add(code)
@@ -29,8 +30,8 @@ class RadixTree():
     def __iter__(self) -> iter:
         return iter(self.get_items())
 
-    def __len__(self) -> len:
-        return len(self.get_items())
+    def __len__(self):
+        return self.len
 
     def extend(self, codes) -> None:
         for code in codes:
@@ -111,7 +112,7 @@ class RadixTree():
         new.extend(items.symmetric_difference(arg))
         return new
 
-    def symmetric_difference_update(self, arg)-> None:
+    def symmetric_difference_update(self, arg) -> None:
         items = self.get_items()
         items.symmetric_difference_update(arg)
         self.clear()
@@ -140,11 +141,13 @@ class RadixTree():
                     if i == len(code) and ii == len(current_key):
                         current_dict = current_dict[current_key]
                         current_dict[_end] = _end
+                        self.len += 1
                     # if 'code' ended, split's current_key, creates new dict,
                     # adds _end entry (to mark word's ending):
                     elif i == len(code):
                         current_dict[current_key[:ii]] = {current_key[ii:]:current_dict.pop(current_key)}
                         current_dict[current_key[:ii]][_end] = _end
+                        self.len += 1
                     # if 'current_key' ended, go depth to next dict:
                     elif ii == len(current_key):
                         current_dict = current_dict[current_key]
@@ -157,7 +160,8 @@ class RadixTree():
             # if failed to find matches key, create new dict {code[i:]:{_end:_end}}
             else:
                 current_dict = current_dict.setdefault(code[i:], {_end:_end})
-                i = len(code)
+                self.len += 1
+                break
 
     def __get_codes_depth(self, root, prefix, codes_found) -> None:
         if _end in root:
@@ -171,7 +175,7 @@ class RadixTree():
         self.__get_codes_depth(self.root, '', items)
         return items
 
-    def items(self) -> None:
+    def print_items(self) -> None:
         print(sorted(self.get_items()))
 
     def children(self, code) -> set():

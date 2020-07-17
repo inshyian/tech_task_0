@@ -204,10 +204,10 @@ def test_add():
     assert repr(sorted(b)) == repr(sorted(c))
 
 
-def test_items(capsys):
+def test_print_items(capsys):
     a = RadixTreeSet.RadixTree('a', 'asd3asd', 'dsf', '12312', '123', '1', '123')
     b = {'a', 'asd3asd', 'dsf', '12312', '123', '1', '123'}
-    a.items()
+    a.print_items()
     captured = capsys.readouterr()
     a_out = captured.out
     print(sorted(b))
