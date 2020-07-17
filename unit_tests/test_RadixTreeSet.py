@@ -8,45 +8,53 @@ Created on Thu Jul 16 08:54:26 2020
 
 from src import RadixTreeSet
 
+
 def test_init():
     a = RadixTreeSet.RadixTree('12', '13', '123', '12345', '123465', '145678')
     b = {'12', '13', '123', '12345', '123465', '145678'}
     assert repr(sorted(a)) == repr(sorted(b))
 
+
 def test_repr():
     a = RadixTreeSet.RadixTree('a', 'asd3asd', 'dsf', '12312', '123', '1')
     b = {'a', 'asd3asd', 'dsf', '12312', '123', '1'}
     assert repr(sorted(a)) == repr(sorted(b))
-    
+
+
 def test_len():
     a = RadixTreeSet.RadixTree('a', 'asd3asd', 'dsf', '12312', '123', '1')
     b = {'a', 'asd3asd', 'dsf', '12312', '123', '1'}
     assert len(a) == len(b)
-    
+
+
 def test_extend():
     a = RadixTreeSet.RadixTree()
     b = {'a', 'asd3asd', 'dsf', '12312', '123', '1', '123'}
     a.extend(b)
     assert repr(sorted(a)) == repr(sorted(b))
-    
+
+
 def test_copy():
     a = RadixTreeSet.RadixTree('a', 'asd3asd', 'dsf', '12312', '123', '1')
     b = a.copy()
     assert a.root == b.root
-    
+
+
 def test_clear():
     a = RadixTreeSet.RadixTree('a', 'asd3asd', 'dsf', '12312', '123', '1', '123')
     b = RadixTreeSet.RadixTree()
     a.clear()
-    assert repr(a) == repr(b)    
-    
+    assert repr(a) == repr(b)
+
+
 def test_union_iter():
     a = RadixTreeSet.RadixTree('12', '13')
     b = RadixTreeSet.RadixTree('12', '123')
     c = {'12', '13'}
     d = {'12', '123'}
     assert sorted(a.union(b)) == sorted(c.union(d))
-    
+
+
 def test_difference():
     a = RadixTreeSet.RadixTree('12', '13', '_')
     b = RadixTreeSet.RadixTree('12', '123', '1234', 'a')
@@ -56,7 +64,8 @@ def test_difference():
     assert sorted(b.difference(a)) == sorted(d.difference(c))
     assert sorted(a.difference(d)) == sorted(c.difference(b))
     assert sorted(d.difference(a)) == sorted(b.difference(c))
-    
+
+
 def test_difference_update():
     a = RadixTreeSet.RadixTree('12', '13', '_')
     b = RadixTreeSet.RadixTree('12', '123', '1234', 'a')
@@ -65,7 +74,8 @@ def test_difference_update():
     a.difference_update(b)
     c.difference_update(d)
     assert sorted(a) == sorted(c)
-    
+
+
 def test_discard():
     a = RadixTreeSet.RadixTree('12', '13', '_')
     b = RadixTreeSet.RadixTree('12', '123', '1234', 'a')
@@ -74,14 +84,16 @@ def test_discard():
     a.discard(b)
     c.discard(d)
     assert sorted(a) == sorted(c)
-    
+
+
 def test_intersection():
     a = RadixTreeSet.RadixTree('12', '13', '_')
     b = RadixTreeSet.RadixTree('12', '123', '1234', 'a')
     c = {'12', '13', '_'}
-    d = {'12', '123', '1234', 'a'} 
-    assert sorted(a.intersection(b)) == sorted(c.intersection(d))    
-    
+    d = {'12', '123', '1234', 'a'}
+    assert sorted(a.intersection(b)) == sorted(c.intersection(d))
+
+
 def test_intersection_update():
     a = RadixTreeSet.RadixTree('12', '13', '_')
     b = RadixTreeSet.RadixTree('12', '123', '1234', 'a')
@@ -90,7 +102,8 @@ def test_intersection_update():
     a.intersection_update(b)
     c.intersection_update(d)
     assert sorted(a) == sorted(c)
-    
+
+
 def test_isdisjoint():
     a = RadixTreeSet.RadixTree('12', '13', '_')
     b = RadixTreeSet.RadixTree('12', '14', '15', 'a')
@@ -101,7 +114,8 @@ def test_isdisjoint():
     assert a.isdisjoint(b) == d.isdisjoint(e)
     assert a.isdisjoint(c) == d.isdisjoint(f)
     assert b.isdisjoint(c) == e.isdisjoint(f)
-    
+
+
 def test_issubset():
     a = RadixTreeSet.RadixTree('12', '13', '14')
     b = RadixTreeSet.RadixTree('12', '13', '15', '14')
@@ -112,7 +126,8 @@ def test_issubset():
     assert a.issubset(b) == d.issubset(e)
     assert a.issubset(c) == d.issubset(f)
     assert b.issubset(c) == e.issubset(f)
-    
+
+
 def test_issuperset():
     a = RadixTreeSet.RadixTree('12', '13', '14', '15')
     b = RadixTreeSet.RadixTree('12', '13', '14')
@@ -123,28 +138,32 @@ def test_issuperset():
     assert a.issuperset(b) == d.issuperset(e)
     assert a.issuperset(c) == d.issuperset(f)
     assert b.issuperset(c) == e.issuperset(f)
-    
+
+
     # fails sometimes with more than one item, probably due to different order in set() and RadixTree()
 def test_pop():
     a = RadixTreeSet.RadixTree('15')
     b = {'15'}
     assert a.pop() == b.pop()
     assert sorted(a) == sorted(b)
-    
+
+
 def test_remove():
     a = RadixTreeSet.RadixTree('12', '13', '14', '15')
     b = {'12', '13', '14', '15'}
     a.remove('13')
     b.remove('13')
     assert sorted(a) == sorted(b)
-    
+
+
 def test_symmetric_difference():
     a = RadixTreeSet.RadixTree('12', '13', '14', '15')
     b = RadixTreeSet.RadixTree('12', '13', '18', '20')
     c = {'12', '13', '14', '15'}
     d = {'12', '13', '18', '20'}
     assert sorted(a.symmetric_difference(b)) == sorted(c.symmetric_difference(d))
-    
+
+
 def test_symmetric_difference_update():
     a = RadixTreeSet.RadixTree('12', '13', '14', '15')
     b = RadixTreeSet.RadixTree('12', '13', '18', '20')
@@ -153,7 +172,8 @@ def test_symmetric_difference_update():
     a.symmetric_difference_update(b)
     c.symmetric_difference_update(d)
     assert sorted(a) == sorted(c)
-    
+
+
 def test_update():
     a = RadixTreeSet.RadixTree('1')
     b = RadixTreeSet.RadixTree('2')
@@ -168,7 +188,8 @@ def test_update():
     a.update(b_, c_, c__)
     a_.update(b, c, c__)
     assert sorted(a) == sorted(a_)
-    
+
+
 def test_add():
     a = RadixTreeSet.RadixTree('a', 'asd3asd', 'dsf', '12312', '123', '1', '123')
     b = RadixTreeSet.RadixTree()
@@ -181,7 +202,8 @@ def test_add():
     c = {'a', 'asd3asd', 'dsf', '12312', '123', '1', '123'}
     assert a.root == b.root
     assert repr(sorted(b)) == repr(sorted(c))
-      
+
+
 def test_items(capsys):
     a = RadixTreeSet.RadixTree('a', 'asd3asd', 'dsf', '12312', '123', '1', '123')
     b = {'a', 'asd3asd', 'dsf', '12312', '123', '1', '123'}
@@ -192,10 +214,12 @@ def test_items(capsys):
     captured = capsys.readouterr()
     b_out = captured.out
     assert a_out == b_out
-    
+
+
 def test_children():
     a = RadixTreeSet.RadixTree('12', '13', '123', '12345', 'a', '123465', '145678')
     assert a.children('123') == {'123', '12345', '123465'}
+
 
 def test_parents():
     a = RadixTreeSet.RadixTree('12', '13', '123', '12345', 'a', '123465', '145678')
