@@ -39,7 +39,7 @@ class RadixTree():
 
     def copy(self):
         copy = RadixTree()
-        copy.root = self.root.copy()
+        copy.extend(self.get_items())
         return copy
 
     def clear(self):

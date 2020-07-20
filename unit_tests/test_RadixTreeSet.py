@@ -37,7 +37,9 @@ def test_extend():
 def test_copy():
     a = RadixTreeSet.RadixTree('a', 'asd3asd', 'dsf', '12312', '123', '1')
     b = a.copy()
-    assert a.root == b.root
+    assert sorted(a) == sorted(b)
+    b.add('dsfasdas')
+    assert sorted(a) != sorted(b)
 
 
 def test_clear():
