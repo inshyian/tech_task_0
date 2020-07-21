@@ -44,6 +44,7 @@ class RadixTree():
 
     def clear(self):
         self.root = dict()
+        self.len = 0
 
     def union(self, args):
         new = self.copy()
@@ -121,6 +122,41 @@ class RadixTree():
     def update(self, *args) -> None:
         for arg in args:
             self.extend(arg)
+            
+    def get_items(self) -> set():
+        items = set()
+        self.__get_codes_depth(self.root, '', items)
+        return items
+    
+    def get_len(self):
+        return self.len
+
+    def print_items(self) -> None:
+        print(sorted(self.get_items()))
+        
+    def __get_codes_depth(self, root, prefix, codes_found) -> None:
+        if _end in root:
+            codes_found.add(prefix)
+        for key in root.keys():
+            if key != _end:
+                self.__get_codes_depth(root[key], prefix + key, codes_found)
+
+    def __find_node(self, text):
+        pass
+
+    def __add__(self, other):
+        new = RadixTree()
+        new.update(self.get_items(), other.get_items())
+        return new
+
+    def __lt__(self, other):
+        return self.len < other.get_len()
+        
+    def __gt__(self, other):
+        return self.len > other.get_len()
+        
+    def __et__(self, other):
+        return self.len == other.get_len()
 
     def add(self, code) -> None:
         current_dict = self.root
@@ -162,21 +198,6 @@ class RadixTree():
                 current_dict = current_dict.setdefault(code[i:], {_end:_end})
                 self.len += 1
                 break
-
-    def __get_codes_depth(self, root, prefix, codes_found) -> None:
-        if _end in root:
-            codes_found.add(prefix)
-        for key in root.keys():
-            if key != _end:
-                self.__get_codes_depth(root[key], prefix + key, codes_found)
-
-    def get_items(self) -> set():
-        items = set()
-        self.__get_codes_depth(self.root, '', items)
-        return items
-
-    def print_items(self) -> None:
-        print(sorted(self.get_items()))
 
     def children(self, code) -> set():
         codes_found = set()

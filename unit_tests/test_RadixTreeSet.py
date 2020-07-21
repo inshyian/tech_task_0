@@ -192,20 +192,6 @@ def test_update():
     assert sorted(a) == sorted(a_)
 
 
-def test_add():
-    a = RadixTreeSet.RadixTree('a', 'asd3asd', 'dsf', '12312', '123', '1', '123')
-    b = RadixTreeSet.RadixTree()
-    b.add('asd3asd')
-    b.add('a')
-    b.add('123')
-    b.add('1')
-    b.add('12312')
-    b.add('dsf')
-    c = {'a', 'asd3asd', 'dsf', '12312', '123', '1', '123'}
-    assert a.root == b.root
-    assert repr(sorted(b)) == repr(sorted(c))
-
-
 def test_print_items(capsys):
     a = RadixTreeSet.RadixTree('a', 'asd3asd', 'dsf', '12312', '123', '1', '123')
     b = {'a', 'asd3asd', 'dsf', '12312', '123', '1', '123'}
@@ -218,10 +204,68 @@ def test_print_items(capsys):
     assert a_out == b_out
 
 
+def test_add():
+    a = RadixTreeSet.RadixTree('a', 'asd3asd', 'dsf', '12312', '123', '1', '123')
+    b = RadixTreeSet.RadixTree()
+    b.add('asd3asd')
+    b.add('a')
+    b.add('123')
+    b.add('1')
+    b.add('12312')
+    b.add('dsf')
+    c = {'a', 'asd3asd', 'dsf', '12312', '123', '1', '123'}
+    assert a.root == b.root
+    assert repr(sorted(b)) == repr(sorted(c))
+    
+    
+def test_get_len():
+    a = RadixTreeSet.RadixTree('a', 'asd3asd')
+    assert a.get_len() == 2
+    a.add('23')
+    assert a.get_len() == 3
+    a.remove('asd3asd')
+    assert a.get_len() == 2
+    
+    
+def test_op_add():
+    a = RadixTreeSet.RadixTree('a', 'asd3asd')
+    b = RadixTreeSet.RadixTree('dsf', '12312', '123', '1', '123')
+    c = RadixTreeSet.RadixTree('a', 'asd3asd', 'dsf', '12312', '123', '1', '123')
+    d = a + b
+    assert sorted(c) == sorted(d)
+    
+    
+def test_op_lt():
+    a = RadixTreeSet.RadixTree('a')
+    b = RadixTreeSet.RadixTree('a', 'asd3asd')
+    c = RadixTreeSet.RadixTree('a', 'asd3asd', '23')
+    assert (a < b) == True
+    assert (b < b) == False
+    assert (c < b) == False
+    
+    
+def test_op_gt():
+    a = RadixTreeSet.RadixTree('a')
+    b = RadixTreeSet.RadixTree('a', 'asd3asd')
+    c = RadixTreeSet.RadixTree('a', 'asd3asd', '23')
+    assert (a > b) == False
+    assert (b > b) == False
+    assert (c > b) == True
+    
+    
+def test_op_et():
+    a = RadixTreeSet.RadixTree('a')
+    b = RadixTreeSet.RadixTree('a', 'asd3asd')
+    c = RadixTreeSet.RadixTree('a', 'asd3asd', '23')
+    assert (a == b) == False
+    assert (b == b) == True
+    assert (c == b) == False
+    
+
 def test_children():
     a = RadixTreeSet.RadixTree('12', '13', '123', '12345', 'a', '123465', '145678')
     assert a.children('123') == {'123', '12345', '123465'}
-
+    
 
 def test_parents():
     a = RadixTreeSet.RadixTree('12', '13', '123', '12345', 'a', '123465', '145678')
